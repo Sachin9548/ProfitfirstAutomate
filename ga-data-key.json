@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "original-brace-460308-v8",
+  "private_key_id": "81e2b048e85c57d19e7aa427dcca0746f208294f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCOk4qyspqY+S+k\n5EghKMGKUXS0AMKZ3CRXRdiBSOSt76xwWHSpb4tSB465cVCyODlZlnbJfDSgwP+a\nAidHfZWYHOg6ZjxxvaPQp/bUhx1jfpGjSnkMkyPCpjqD02swZh++F3Si+i2WZoDA\nhzmwqn+hnIutMs4NgiBAfCzfwBpvRGPH7yUrTdvM8xulHMXizLoB9ZLJRV7L5009\nyFtbRWrEAtSVS6qDu/L8Qkd9CY008X4TytmuF+UmVj7/5+Oc7JfMx/nD089GLgZI\nOl1TpCibKviinDd/qkK9sqRFshIPc53iS5C/f/1uAZ2VJwGZWCJjekvO2RS8UeuG\n+2O5rhM3AgMBAAECggEAH3y7GVrzZIxHtuFJgrU3BP6XSPeQAp3JEtMUjPzVsAop\n6YfHf/Hn8V5E6XR6j1l2ZPAjXL0G/GeTK2aFWTcFdhoQOXGBsNbiWj719pq+ZU47\nCLZ2RE4sjBzc+GcVGZO8N+WDN0kMD1ak4aAboAYPeNgTStVZB0exKryhxmptDBxY\nfLmx6DQSs6f/Pz88i8dgzU9kPkSt0+Ck+Juo3NGkNdLeMhuGdnRU43jzPpeKWBZl\nHLz5zCFgLBcS+IEjMpkOXW8QQPMMRFqnfIdaeD82rFsXeeVngXVG68vd2ksBJZ0K\nw5MUsOcAnODZ3n92w/Bc7ABz1yPQPDhXFanXJSJ55QKBgQDHXFus4uj5VttKo0Wu\nUqJ4WUb3kJ450RvzLVPeuqHAYVWPxwTN+OwqK1OxhZwgNVIB80M6LETK9rXkCLvg\naXFzvQqHXTqi/OD2ORG7VPbmizGI9M3dIHUVNHNBgI+J8LSfMPDy0LznYieG47wJ\nxTffbnvRvLt7y1Ekcy273UnQ7QKBgQC3FTawD+aLY/o+oUaNsFcH7HB+6N2w5Ucq\nvunRPq+WIALif8RV2jAdAxi48VsIKy7dcz5p9NNe//aLoZtTQCQKGK6srAi7qbVH\nwQAg4hcuWTRrDcoVTf4nehNS2TZ1Lv0bUWSookckBYL26UlpBX+XPYYbfDheok0a\nR38S05TEMwKBgAL/D12s12WP+aHIjG6PTWPTq65i3Q3vZ6UjBESvt2ilzdxoWFkk\nKaCEoDBl2q/dPUtMNbF1It+OD7PKsdAwpYTgzXy1WQFEHbl1qB+RqlhStT7itwlg\nyIG2FRlh7kZbeMt/t89edchggEmVuKjI7wsLpQ7E8Ghu6NxMYt6U99wNAoGACkZY\ngV0DFUORIb6vVPhWig1M6vJqrqjPa6i3OpUICabWQpvlCuRp2tb3pjl1YGn8AVWc\nZRnmWuiGj6OMMgnhe+eStgIZo16M2/AK782Ae4tqE6/8bWGpJ9IED5w9ICp47fWN\nbqFc2LqudOj2w7wZQwWi5xv7leQJ67Wjfgz9xl0CgYBtE2pwjwc+dSnr7rfQ8YSJ\n+P5AUQYtYE3Okbbvk2HtvWpLta+0XuJ5wkVneUBY9k4Pcy+0Db7gRak8edeL/Mmv\npfPNKI7k7ZFBWz6zJIEhYPDEQromIkrJ8SjuTI7ZVpbu4kHKSvbEEFaBIuos4oSj\nYOOh2Dptu+8FkG6gCYU5bA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "profit-first@original-brace-460308-v8.iam.gserviceaccount.com",
+  "client_id": "107600287166632375312",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/profit-first%40original-brace-460308-v8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
