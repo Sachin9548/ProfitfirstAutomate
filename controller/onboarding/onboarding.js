@@ -5,6 +5,7 @@ import MetaCredential from "../../model/MetaCredential.js";
 const FB_APP_ID = "709429934792295";
 const FB_APP_SECRET = "2d41b18b81e4d99acde04a4e57fabbd9";
 const REDIRECT_URI = 'https://profitfirstanalytics.co.in/api/onboard/auth/callback';
+import querystring from 'querystring';
 
 // GET CURRENT STEP
 const currentStep = async (req, res) => {
