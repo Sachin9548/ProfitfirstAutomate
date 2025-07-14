@@ -192,11 +192,12 @@ const facebookLogin=async (req,res)=>{
    res.json({ redirectUrl: url });
 }
 
-const facebookAccesstoken=async (req, res) => {
-  console.log("facebookAccesstoken redireact your request")
+const facebookAccesstoken = async (req, res) => {
+  console.log("facebookAccesstoken redireact your request");
   const code = req.query.code;
 
   try {
+    // Step 1: Exchange code for short-lived access token
     const tokenRes = await axios.get(
       `https://graph.facebook.com/v19.0/oauth/access_token?` +
       querystring.stringify({
@@ -207,25 +208,37 @@ const facebookAccesstoken=async (req, res) => {
       })
     );
 
-    const accessToken = tokenRes.data.access_token;
+    const shortLivedToken = tokenRes.data.access_token;
 
-    // Inject token directly into the HTML response
-   const html = `
-    <html>
-      <head>
-        <script>
-          sessionStorage.setItem('fbAccessToken', '${accessToken}');
-          window.location.href = '/onboarding';
-        </script>
-      </head>
-      <body>
-        <p>Redirecting to onboarding...</p>
-      </body>
-    </html>
-  `;
+    // Step 2: Exchange short-lived token for long-lived token
+    const longLivedRes = await axios.get(
+      `https://graph.facebook.com/v19.0/oauth/access_token?` +
+      querystring.stringify({
+        grant_type: 'fb_exchange_token',
+        client_id: FB_APP_ID,
+        client_secret: FB_APP_SECRET,
+        fb_exchange_token: shortLivedToken,
+      })
+    );
 
-  res.send(html);
+    const accessToken = longLivedRes.data.access_token;
 
+    // Inject long-lived token into the HTML response
+    const html = `
+      <html>
+        <head>
+          <script>
+            sessionStorage.setItem('fbAccessToken', '${accessToken}');
+            window.location.href = '/onboarding';
+          </script>
+        </head>
+        <body>
+          <p>Redirecting to onboarding...</p>
+        </body>
+      </html>
+    `;
+
+    res.send(html);
   } catch (err) {
     console.error('Token Exchange Error:', err.response?.data || err.message);
     res.status(500).send(`
@@ -237,6 +250,7 @@ const facebookAccesstoken=async (req, res) => {
     `);
   }
 };
+
 // STEP 4 - META ADS
 const onboardStep4 = async (req, res) => {
   const user = req.user;
