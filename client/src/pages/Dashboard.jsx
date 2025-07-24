@@ -25,12 +25,17 @@ import { useNavigate } from "react-router-dom";
 import DateRangeSelector from "../components/DateRangeSelector";
 
 // Helper: Convert a JS Date to “YYYY-MM-DD” in local time
-const toLocalYMD = (jsDate) => {
-  const offsetMs = jsDate.getTimezoneOffset() * 60 * 1000;
-  const local = new Date(jsDate.getTime() - offsetMs);
-  return local.toISOString().split("T")[0];
+const toLocalYMD = (date) => {
+  const istOffset = 330 * 60 * 1000; // 5.5 hours in milliseconds
+  const istDate = new Date(date.getTime() + istOffset);
+  return istDate.toISOString().split("T")[0];
 };
 
+const toISTDateString = (date) => {
+  const istOffset = 330 * 60 * 1000; // 5.5 hours in milliseconds
+  const istDate = new Date(date.getTime() + istOffset);
+  return istDate.toISOString().split("T")[0];
+};
 // Reusable Card component to reduce repeated Tailwind classes
 const Card = ({ children, className = "" }) => (
   <div className={`bg-[#161616] p-4 rounded-xl ${className}`}>{children}</div>

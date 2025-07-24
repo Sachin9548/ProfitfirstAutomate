@@ -10,6 +10,7 @@ import {
     Shopifyhelper,
     facebookLogin,
     facebookAccesstoken,
+    adsAccountslist,
   } from "../controller/onboarding/onboarding.js";
 import auth from '../middleware/auth.js';
 
@@ -27,7 +28,8 @@ router.post('/modifyprice',auth,manufacture);
  
 // meta connnect
 router.get('/login',auth,facebookLogin);
-router.get('/auth/callback',facebookAccesstoken)
+router.get('/auth/callback',facebookAccesstoken);
+router.get('/ad-accounts',adsAccountslist);
 router.post('/step4',auth,onboardStep4);
 
 router.post('/step5',auth,onboardStep5);

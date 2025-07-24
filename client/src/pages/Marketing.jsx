@@ -17,7 +17,11 @@ import { PulseLoader } from "react-spinners";
 import axiosInstance from "../../axios";
 import { toast } from "react-toastify";
 import DateRangeSelector from "../components/DateRangeSelector";
-
+const toISTDateString = (date) => {
+  const istOffset = 330 * 60 * 1000; // 5.5 hours in milliseconds
+  const istDate = new Date(date.getTime() + istOffset);
+  return istDate.toISOString().split("T")[0];
+}; 
 const Marketing = () => {
   const [adsSummaryData, setAdsSummaryData] = useState([]);
   const [metaCampaignMetrics, setMetaCampaignMetrics] = useState({});
@@ -41,8 +45,8 @@ const Marketing = () => {
         setLoading(true);
         const res = await axiosInstance.get("/data/marketingData", {
           params: {
-            startDate: dateRange.startDate.toISOString(),
-            endDate: dateRange.endDate.toISOString(),
+            startDate: toISTDateString(dateRange.startDate),
+            endDate: toISTDateString(dateRange.endDate),
           },
         });
         const {
@@ -118,7 +122,7 @@ const Marketing = () => {
           </button>
 
           {showDateSelector && (
-            <div className="absolute top-full mt-2 right-0 z-50 bg-[#161616] rounded-lg shadow-lg border border-gray-700">
+            <div className="absolute top-full mt-2 z-50 right-0 bg-[#161616] rounded-lg shadow-lg border border-gray-700 parentz">
               <DateRangeSelector onApply={handleApply} />
             </div>
           )}

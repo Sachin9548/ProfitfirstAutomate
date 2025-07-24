@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
+import RedMissage from './components/RedMissage';
 
 function MainDashboard() {
   return (
@@ -20,6 +21,7 @@ function MainDashboard() {
       <Sidebar />
       {/* Main Content */}
       <div className="flex-1 flex flex-col max-h-screen">
+        {/* <RedMissage/> */}
         <Topbar />
         <div className="flex-1 overflow-y-auto p-4 hide-scrollbar">
           <Outlet />

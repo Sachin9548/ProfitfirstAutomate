@@ -22,6 +22,9 @@ export const updateShopifySettings = async (req, res) => {
   if (!storeUrl || !apiKey || !apiSecret || !accessToken) {
     return res.status(400).json({ message: "All fields required" });
   }
+  if(storeUrl || apiKey || apiSecret || accessToken){
+     return res.status(400).json({ message: "Please connect to the Developer " });
+  }
 
   try {
     // Verify with Shopify
@@ -51,7 +54,9 @@ export const updateMetaSettings = async (req, res) => {
   }
 
   // grab admin token for Meta from your MetaCredential model
-  const metaCred = await MetaCredential.findOne();
+  // const metaCred = await MetaCredential.findOne();
+  const metaCred=req.user.onboarding.step4.accessToken;
+
   if (!metaCred?.accessToken) {
     return res.status(500).json({ message: "Meta access token not configured" });
   }

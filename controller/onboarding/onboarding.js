@@ -4,8 +4,9 @@ import MetaCredential from "../../model/MetaCredential.js";
 
 const FB_APP_ID = "709429934792295";
 const FB_APP_SECRET = "2d41b18b81e4d99acde04a4e57fabbd9";
-const REDIRECT_URI = 'https://profitfirstanalytics.co.in/api/onboard/auth/callback';
-import querystring from 'querystring';
+const REDIRECT_URI =
+  "https://profitfirstanalytics.co.in/api/onboard/auth/callback";
+import querystring from "querystring";
 
 // GET CURRENT STEP
 const currentStep = async (req, res) => {
@@ -48,7 +49,6 @@ const onboardStep1 = async (req, res) => {
   }
 };
 
-
 const Shopifyhelper = async (req, res) => {
   const { shop, password } = req.query;
   try {
@@ -59,9 +59,8 @@ const Shopifyhelper = async (req, res) => {
   } catch (error) {
     console.error("Proxy error:", error.message);
     res.status(500).json({ error: "Proxy failed" });
-    }
+  }
 };
-
 
 // STEP 2 - SHOPIFY
 const onboardStep2 = async (req, res) => {
@@ -186,11 +185,12 @@ const manufacture = async (req, res) => {
   }
 };
 
-
-const facebookLogin=async (req,res)=>{
-  const url = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=ads_read,business_management&response_type=code&state=123`;
-   res.json({ redirectUrl: url });
-}
+const facebookLogin = async (req, res) => {
+  const url = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
+    REDIRECT_URI
+  )}&scope=ads_read,business_management&response_type=code&state=123`;
+  res.json({ redirectUrl: url });
+};
 
 const facebookAccesstoken = async (req, res) => {
   console.log("facebookAccesstoken redireact your request");
@@ -200,12 +200,12 @@ const facebookAccesstoken = async (req, res) => {
     // Step 1: Exchange code for short-lived access token
     const tokenRes = await axios.get(
       `https://graph.facebook.com/v19.0/oauth/access_token?` +
-      querystring.stringify({
-        client_id: FB_APP_ID,
-        redirect_uri: REDIRECT_URI,
-        client_secret: FB_APP_SECRET,
-        code,
-      })
+        querystring.stringify({
+          client_id: FB_APP_ID,
+          redirect_uri: REDIRECT_URI,
+          client_secret: FB_APP_SECRET,
+          code,
+        })
     );
 
     const shortLivedToken = tokenRes.data.access_token;
@@ -213,12 +213,12 @@ const facebookAccesstoken = async (req, res) => {
     // Step 2: Exchange short-lived token for long-lived token
     const longLivedRes = await axios.get(
       `https://graph.facebook.com/v19.0/oauth/access_token?` +
-      querystring.stringify({
-        grant_type: 'fb_exchange_token',
-        client_id: FB_APP_ID,
-        client_secret: FB_APP_SECRET,
-        fb_exchange_token: shortLivedToken,
-      })
+        querystring.stringify({
+          grant_type: "fb_exchange_token",
+          client_id: FB_APP_ID,
+          client_secret: FB_APP_SECRET,
+          fb_exchange_token: shortLivedToken,
+        })
     );
 
     const accessToken = longLivedRes.data.access_token;
@@ -240,7 +240,7 @@ const facebookAccesstoken = async (req, res) => {
 
     res.send(html);
   } catch (err) {
-    console.error('Token Exchange Error:', err.response?.data || err.message);
+    console.error("Token Exchange Error:", err.response?.data || err.message);
     res.status(500).send(`
       <html>
         <body>
@@ -250,6 +250,46 @@ const facebookAccesstoken = async (req, res) => {
     `);
   }
 };
+
+const adsAccountslist = async (req, res) => {
+  const accessToken = req.query.access_token;
+  
+  if (!accessToken) {
+    return res.status(400).json({ message: "Access token is required" });
+  }
+
+  try {
+    const response = await axios.get(
+      `https://graph.facebook.com/v19.0/me/adaccounts`, 
+      {
+        params: {
+          access_token: accessToken, // Send the access token
+          fields: "id,name", // Request both id and name fields
+        }
+      }
+    );
+
+    if (!response.data || !response.data.data) {
+      throw new Error("No ad accounts found");
+    }
+
+    // Map over the response to extract adAccountId and name
+    const adAccounts = response.data.data.map((account) => ({
+      adAccountId: account.id, // ID (which includes the "act_" prefix)
+      name: account.name, // Name of the ad account
+    }));
+
+    return res.status(200).json({ adAccounts });
+  } catch (error) {
+    console.error("Error fetching ad accounts:", error.response?.data || error.message);
+    return res.status(500).json({
+      message: "Failed to retrieve ad accounts from Meta.",
+      error: error.response ? error.response.data : error.message,
+    });
+  }
+};
+
+
 
 // STEP 4 - META ADS
 const onboardStep4 = async (req, res) => {
@@ -271,16 +311,22 @@ const onboardStep4 = async (req, res) => {
     );
 
     if (!testMetaResponse.data?.id) {
-      return res.status(401).json({ message: "Invalid Meta credentials please firly provide the access" });
+      return res
+        .status(401)
+        .json({
+          message: "Invalid Meta credentials please firly provide the access",
+        });
     }
-    user.onboarding.step4.adAccountId =adAccountId;
-    user.onboarding.step4.accessToken=token;
+    user.onboarding.step4.adAccountId = adAccountId;
+    user.onboarding.step4.accessToken = token;
     user.step = 5;
     await user.save();
     res.json({ message: "Step 4 completed", nextStep: 5 });
-  
   } catch (error) {
-    console.error("Meta verification error:", error.response?.data || error.message);
+    console.error(
+      "Meta verification error:",
+      error.response?.data || error.message
+    );
 
     return res.status(401).json({
       message:
@@ -354,5 +400,6 @@ export {
   manufacture,
   Shopifyhelper,
   facebookLogin,
-  facebookAccesstoken
+  facebookAccesstoken,
+  adsAccountslist,
 };

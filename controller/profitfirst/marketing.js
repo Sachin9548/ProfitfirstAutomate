@@ -7,17 +7,27 @@ const cache = new NodeCache({ stdTTL: 600 });
 
 export const marketingData = async (req, res) => {
   const { startDate, endDate } = req.query;
+const formatteds = new Date(startDate).toISOString().split("T")[0];
+const formattede = new Date(endDate).toISOString().split("T")[0];
+  // if (!startDate || !endDate) {
+  //   return res.status(400).json({ message: "Start date and end date are required." });
+  // }
 
-  if (!startDate || !endDate) {
-    return res.status(400).json({ message: "Start date and end date are required." });
-  }
+  // 🔧 Fixed Date Range in IST
+  const toISTDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const istOffset = 330 * 60 * 1000;
+    const istDate = new Date(date.getTime() + istOffset);
+    return istDate.toISOString().split("T")[0];
+  };
+  
+  const formattedStart = toISTDate(formatteds);
+  const formattedEnd = toISTDate(formattede);
+  
 
   try {
     const user = req.user;
     const adAccountId = user.onboarding.step4.adAccountId;
-    const formattedStart = new Date(startDate).toISOString().split('T')[0];
-    const formattedEnd   = new Date(endDate).toISOString().split('T')[0];
-
     // Build cache key
     const cacheKey = `marketing|${adAccountId}|${formattedStart}|${formattedEnd}`;
     const cached = cache.get(cacheKey);
@@ -25,11 +35,15 @@ export const marketingData = async (req, res) => {
       return res.status(200).json(cached);
     }
 
-    const metaCred = await MetaCredential.findOne();
-    if (!adAccountId || !metaCred?.accessToken) {
+    // const metaCred = await MetaCredential.findOne();
+    const metaCred=req.user.onboarding.step4.accessToken;
+
+
+
+    if (!adAccountId || !metaCred) {
       return res.status(400).json({ message: "Meta token not configured. Contact admin." });
     }
-    const accessToken = metaCred.accessToken;
+    const accessToken = metaCred;
     const url = `https://graph.facebook.com/v15.0/act_${adAccountId}/insights`;
 
     // Campaign-level data
@@ -97,6 +111,7 @@ export const marketingData = async (req, res) => {
       time_range: JSON.stringify({ since: formattedStart, until: formattedEnd }),
       fields: "spend,impressions,cpm,ctr,clicks,cpc,website_purchase_roas,action_values,actions,purchase_roas"
     };
+
     let overallData = {};
     try {
       const response = await axios.get(url, { params: overallParams });

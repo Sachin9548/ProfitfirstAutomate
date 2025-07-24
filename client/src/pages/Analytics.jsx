@@ -27,6 +27,12 @@ const getChange = (curr, prev) => {
   };
 };
 
+const toISTDateString = (date) => {
+  const istOffset = 330 * 60 * 1000; // 5.5 hours in milliseconds
+  const istDate = new Date(date.getTime() + istOffset);
+  return istDate.toISOString().split("T")[0];
+};
+
 const Analytics = () => {
   // --- State ---
   const [view, setView] = useState("Visitor");
@@ -68,8 +74,8 @@ const Analytics = () => {
       try {
         const resp = await axiosInstance.get("/data/analytics", {
           params: {
-            startDate: dateRange.startDate.toISOString(),
-            endDate: dateRange.endDate.toISOString(),
+            startDate: toISTDateString(dateRange.startDate),
+            endDate: toISTDateString(dateRange.endDate),
           },
         });
         setAnalytics(resp.data);

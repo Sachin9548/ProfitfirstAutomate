@@ -98,6 +98,80 @@ body{
   background: linear-gradient(to bottom right, #04b669e6, #000703);
 }
 
+/* Custom CSS for Marquee Animation */
+@keyframes marqueee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marqueee {
+  display: inline-block;
+  animation: marqueee 20s linear infinite;
+}
+
+
+/* In app.css */
+
+/* Add animation for the welcome message */
+/* In app.css */
+
+/* Add enhanced animation for the welcome message */
+.welcome-message {
+  animation: bounceIn 1s ease-out forwards, slideIn 2s ease-in-out infinite;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  30% {
+    transform: scale(1.1) translateY(-10px);
+  }
+  50% {
+    transform: scale(1) translateY(0);
+  }
+  70% {
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes colorFade {
+  0% {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    color: #ffffff;
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.parentz{
+  z-index: 999;
+}
+
 /* 
 .netsale {
   background-color: hsl(145, 93%, 49%);

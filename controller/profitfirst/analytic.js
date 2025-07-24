@@ -231,6 +231,7 @@ function getCohortData(customers, orders) {
 
 // Main analytics endpoint
 export const AnalyticsData = async (req, res) => {
+
   try {
     const token     = req.user.onboarding.step5.token;
     const endDate   = req.query.endDate   || dayjs().toISOString();
@@ -302,10 +303,12 @@ export const AnalyticsData = async (req, res) => {
     console.error('AnalyticsData error:', e);
     return res.status(500).json({ message: 'Failed to fetch analytics', error: e.message });
   }
+
 };
 
 // Chart-only endpoint
 export const getAnalyticsChart = async (req, res) => {
+
   try {
     const token       = req.user.onboarding.step5.token;
     const queryYear    = Number(req.query.year);
@@ -341,5 +344,6 @@ export const getAnalyticsChart = async (req, res) => {
     console.error('getAnalyticsChart error:', e);
     return res.status(500).json({ message: 'Failed to fetch chart', error: e.message });
   }
+
 };
 

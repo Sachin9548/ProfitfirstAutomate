@@ -300,8 +300,12 @@ export const getDataAi = async (req, res) => {
     }
 
     const adAccountIdRaw = req.user.onboarding.step4?.adAccountId;
-    const metaCred = await MetaCredential.findOne();
-    const metaToken = metaCred?.accessToken || null;
+    const metaToken=req.user.onboarding.step4.accessToken;
+
+    // const metaCred = await MetaCredential.findOne();
+
+
+    // const metaToken = metaCred?.accessToken || null;
     let adAccountPath = null;
     if (adAccountIdRaw) {
       adAccountPath = adAccountIdRaw.startsWith("act_")

@@ -67,7 +67,7 @@ async function fetchAllShopifyResources(url, params = {}, headers = {}) {
 }
 
 async function fetchShopifySummary({ SHOP, SHOPIFY_TOKEN, startDate, endDate }) {
-  const base = `https://${SHOP}/admin/api/2023-10`;
+  const base = `https://${SHOP}/admin/api/2025-04`;
   const headers = { "X-Shopify-Access-Token": SHOPIFY_TOKEN };
 
   const created_at_min = startDate ? `${startDate}T00:00:00Z` : undefined;
@@ -221,9 +221,6 @@ async function fetchShopifyCharts({ SHOP, SHOPIFY_TOKEN }) {
 
   return { monthlySales, monthlyOrders, monthlyCustomerBreakdown };
 }
-
-
-
 
 async function fetchAdsSummary({ AD_ACCOUNT_ID, META_TOKEN, startDate, endDate }) {
   const baseUrl = `https://graph.facebook.com/v16.0/act_${AD_ACCOUNT_ID}/insights`;
@@ -479,8 +476,9 @@ export const dashboard = async (req, res) => {
   const SHOP = req.user.onboarding.step2.storeUrl;
   const SHOPIFY_TOKEN = req.user.onboarding.step2.accessToken;
   const AD_ACCOUNT_ID = req.user.onboarding.step4.adAccountId;
-  const metaCred = await MetaCredential.findOne();
-  const META_TOKEN = metaCred?.accessToken || null;
+  const metaCred=req.user.onboarding.step4.accessToken;
+  // const metaCred = await MetaCredential.findOne();
+  const META_TOKEN = metaCred;
   const SHIPROCKET_TOKEN = req.user.onboarding.step5.token;
   let { startDate, endDate } = req.query;
 
@@ -717,6 +715,8 @@ export const dashboard = async (req, res) => {
       sales: p.quantity,
       total: fmt(p.revenue),
     })),
+
+
   };
 
   const pieCharts = {

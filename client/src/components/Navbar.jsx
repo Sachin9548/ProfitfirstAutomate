@@ -85,7 +85,7 @@ const Navbar = () => {
         {/* Desktop Get Started Button */}
         <div className="hidden md:block">
           <Link
-            to="/Contact"
+            to="/signup"
             className="bg-green-500 text-white px-4 py-2 hover:bg-gray-900 transition rounded-lg"
           >
             Get Started
@@ -192,7 +192,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                to="/Contact"
+                to="/signup"
                 onClick={() => setDrawerOpen(false)}
                 className="bg-green-500 text-white px-4 py-2 hover:bg-gray-900 transition rounded-lg block text-center"
               >

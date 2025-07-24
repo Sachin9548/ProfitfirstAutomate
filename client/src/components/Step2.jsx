@@ -11,6 +11,15 @@ const Step2 = ({ onComplete }) => {
 
   const handleConnect = async () => {
     if (!storeUrl) return toast.error("Please enter your store URL");
+
+    let correctedStoreUrl = storeUrl.trim().toLowerCase();
+
+    if (!correctedStoreUrl.endsWith(".myshopify.com")) {
+      return toast.error(
+        "Invalid Shopify store URL. Please enter a URL that ends with '.myshopify.com'"
+      );
+    }
+
     const url = `https://www.profitfirst.co.in/connect?shop=${storeUrl}`;
     window.open(url, "_blank", "width=800,height=600");
   };

@@ -40,11 +40,11 @@ const Herosection = () => {
         {/* CTA Button */}
         <div className="flex justify-center mt-6 z-10 ">
           <Link
-            to="/Contact"
+            to="/signup"
             className="bg-[#13ef96] text-sm text-black font-medium sm:text-base px-6 py-3 rounded-md transition duration-300"
           >
             Start your free trial
-          </Link>
+          </Link> 
         </div>
       </section>
 
