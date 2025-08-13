@@ -94,27 +94,24 @@ const UserSchema = new mongoose.Schema(
         },
       },
       step5: {
-        shiproactId: {
-          type: String,
-          default: "",
-        },
-        shiproactPassword: {
-          type: String,
-          default: "",
-        },
-        token: {
-          type: String,
-          default: "",
-        },
-        created_at: {
-          type: Date,
-          default: Date.now,
-        },
-        platform: {
-          type: String,
-          default: "Shiprocket",
-        },
+      platform: {
+        type: String,
+        enum: [
+          "Shiprocket",
+          "Dilevery",
+          "Shipway",
+          "Ithink Logistics",
+          "Nimbuspost",
+        ],
       },
+      email: { type: String, default: "" },
+      password: { type: String, default: "" },
+      access_token: { type: String, default: "" },
+      secret_key: { type: String, default: "" }, 
+      license_key: { type: String, default: "" },
+      token: { type: String, default: "" },
+      created_at: { type: Date, default: Date.now },
+    },
     },
   },
   { timestamps: true }

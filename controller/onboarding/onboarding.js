@@ -1,6 +1,7 @@
 import axios from "axios";
 import ProductCost from "../../model/ProductCost.js";
 import MetaCredential from "../../model/MetaCredential.js";
+import base64 from "base-64";
 
 const FB_APP_ID = "709429934792295";
 const FB_APP_SECRET = "2d41b18b81e4d99acde04a4e57fabbd9";
@@ -338,56 +339,155 @@ const onboardStep4 = async (req, res) => {
 
 // STEP 5 - SHIPROCKET
 const onboardStep5 = async (req, res) => {
-  const user = req.user;
-  const { shiproactId, shiproactPassword } = req.body;
-  if (!shiproactId || !shiproactPassword) {
-    return res.status(400).json({ message: "Please fill all required fields" });
-  }
+  const user = req.user; // Assuming 'req.user' is populated by your authentication middleware
+
+  // Destructure all possible credentials from the request body
+  const { platform, access_token, secret_key, email, password } = req.body;
 
   try {
-    const loginResponse = await axios.post(
-      "https://apiv2.shiprocket.in/v1/external/auth/login",
-      {
-        email: shiproactId,
-        password: shiproactPassword,
-      },
-      { headers: { "Content-Type": "application/json" } }
-    );
+    let credentials = {};
+    let token = null;
+    let created_at = new Date();
 
-    const { token, created_at } = loginResponse.data;
+    switch (platform) {
+      case "Shiprocket": { // Note: You might want to correct this typo to "Shiprocket" everywhere
+        // Use the standardized 'email' and 'password' fields
+        if (!email || !password) {
+          return res.status(400).json({ message: "Shiprocket Email and Password are required." });
+        }
 
-    const verifyToken = await axios.get(
-      "https://apiv2.shiprocket.in/v1/external/orders",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        // 1. Get token from Shiprocket
+        const loginResponse = await axios.post(
+          "https://apiv2.shiprocket.in/v1/external/auth/login",
+          { email, password }, // Send credentials with the correct keys
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        token = loginResponse.data.token;
+
+        // 2. Verify the token by making a sample API call
+        await axios.get(
+          "https://apiv2.shiprocket.in/v1/external/orders",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        // 3. Save the standardized credentials
+        credentials = { email, password };
+        break;
       }
-    );
 
-    if (verifyToken.status !== 200 || !verifyToken.data) {
-      return res
-        .status(401)
-        .json({ message: "Invalid Shiprocket credentials" });
+      case "Dilevery": { // Note: Typo, likely "Delhivery"
+        if (!access_token) {
+          return res.status(400).json({ message: "Access token required for Delhivery." });
+        }
+
+        // Note: The validation endpoint is a placeholder. Replace with the actual Delhivery API endpoint.
+        await axios.get("https://track.delhivery.com/api/v1/packages/json/", {
+          headers: { Authorization: `Token ${access_token}` }, // Delhivery often uses 'Token' prefix
+        });
+
+        token = access_token;
+        credentials = { access_token };
+        break;
+      }
+
+      case "Shipway": {
+        if (!email || !password) { // Here 'password' is the license key
+          return res.status(400).json({ message: "Email and License Key required for Shipway." });
+        }
+
+        const authString = base64.encode(`${email}:${password}`);
+        const headers = { Authorization: `Basic ${authString}` };
+
+        // The endpoint below might require specific params for a successful '200' response.
+        // This is a basic check.
+        await axios.get("https://shipway.in/api/customers", { headers });
+
+        token = authString;
+        credentials = { email, license_key: password }; // Save explicitly as license_key for clarity
+        break;
+      }
+
+      case "Ithink Logistics": {
+        if (!access_token || !secret_key) {
+          return res.status(400).json({ message: "Access token and Secret key are required." });
+        }
+
+        // Replace with the correct Ithink Logistics verification endpoint if this one isn't suitable
+        await axios.get("https://api.ithinklogistics.com/api_v3/pickup-list", {
+          headers: {
+            "access_token": access_token,
+            "secret_key": secret_key,
+          },
+        });
+
+        token = access_token;
+        credentials = { access_token, secret_key };
+        break;
+      }
+
+      case "Nimbuspost": {
+        if (!email || !password) {
+          return res.status(400).json({ message: "Email and Password required for Nimbuspost." });
+        }
+
+        // 1. Get token
+        const loginResponse = await axios.post("https://api.nimbuspost.com/v1/users/login", { email, password });
+
+        if (!loginResponse.data || !loginResponse.data.token) {
+          return res.status(401).json({ message: "Invalid Nimbuspost credentials." });
+        }
+
+        token = loginResponse.data.token;
+
+        // 2. Verify token
+        await axios.get("https://api.nimbuspost.com/v1/users/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        credentials = { email, password };
+        break;
+      }
+
+      default:
+        return res.status(400).json({ message: "Unsupported shipping platform." });
     }
 
+    // Save the verified credentials and token to the user document
     user.onboarding.step5 = {
-      shiproactId,
-      shiproactPassword,
+      platform,
+      ...credentials,
       token,
       created_at,
-      platform: "Shiprocket",
     };
 
     user.step = 6;
     await user.save();
-    res.json({ message: "Step 5 completed", nextStep: 6 });
+
+    res.status(200).json({ message: `Step 5 completed successfully for ${platform}.`, nextStep: 6 });
+
   } catch (error) {
-    console.error("Error in onboarding step 5:", error);
-    res.status(500).json({ message: "Server error" });
+    // Enhanced Error Logging
+    console.error("Error in onboarding step 5:", error.message);
+
+    if (error.response) {
+      // Log the actual error response from the external API (e.g., Shiprocket)
+      console.error("API Error Response Status:", error.response.status);
+      console.error("API Error Response Data:", error.response.data);
+      
+      // Return a specific error message to the client
+      return res.status(error.response.status).json({
+        message: `Failed to verify credentials. The shipping platform responded with an error.`,
+        error: error.response.data,
+      });
+    }
+
+    // Generic server error if the issue is not with the external API call
+    return res.status(500).json({ message: "An internal server error occurred.", error: error.message });
   }
 };
+
+
 
 // Export all functions
 export {

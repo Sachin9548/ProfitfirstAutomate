@@ -104,10 +104,9 @@ export const updateShiprocketSettings = async (req, res) => {
 
     // Save on success
     req.user.onboarding.step5 = {
-      shiproactId,
-      shiproactPassword,
+      email: shiproactId,
+      password: shiproactPassword,
       token,
-      created_at,
       platform: "Shiprocket",
     };
     await req.user.save();
