@@ -576,7 +576,7 @@ export const dashboard = async (req, res) => {
         {
           title: "Total Orders",
           value: totalOrders,
-          formula: "Total Sales",s
+          formula: "Total Sales",
         },
         {
           title: "Revenue",
@@ -755,3 +755,4 @@ export const dashboard = async (req, res) => {
     });
   }
 };
+
