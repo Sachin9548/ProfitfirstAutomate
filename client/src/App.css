@@ -171,7 +171,12 @@ body{
 .parentz{
   z-index: 999;
 }
-
+.tooltip-box {
+    display: none;
+  }
+  .tooltip-wrapper:hover .tooltip-box {
+    display: block;
+  }
 /* 
 .netsale {
   background-color: hsl(145, 93%, 49%);

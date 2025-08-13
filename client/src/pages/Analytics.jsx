@@ -174,6 +174,10 @@ const Analytics = () => {
 
   return (
     <div className="p-6 bg-[#0D1D1E] min-h-screen text-white space-y-6">
+
+<h2 className="text-2xl font-bold text-red-500">This section is under maintenance</h2>
+
+
       {/* Header & date */}
      <div className="flex justify-between items-center">
   <h2 className="text-2xl font-bold">{view} Analysis</h2>

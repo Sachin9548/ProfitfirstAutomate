@@ -31,6 +31,7 @@ import { TbMessageChatbotFilled } from "react-icons/tb";
 import chatbott from "./public/WelcomeAnimation.gif"
 function AppWrapper() {
   const isAuthenticated = isTokenValid();
+  // const isAuthenticated = true;
   const location = useLocation();
   const [isChatOpen, setIsChatOpen] = useState(false);
 

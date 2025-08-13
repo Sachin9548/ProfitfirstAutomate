@@ -8,9 +8,9 @@ const Sidebar = () => {
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard", exact: true },
-    { name: "Customer Analysis", path: "/dashboard/analytics" },
+    { name: "Customer Analysis (beta)", path: "/dashboard/analytics" },
     { name: "Marketing", path: "/dashboard/marketing" },
-    { name: "Shipping", path: "/dashboard/shipping" },
+    { name: "Shipping (beta) ", path: "/dashboard/shipping" },
     { name: "Products", path: "/dashboard/products" },
   ];
 
@@ -100,4 +100,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Sidebar; 

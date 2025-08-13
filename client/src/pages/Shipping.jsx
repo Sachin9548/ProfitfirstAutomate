@@ -184,6 +184,8 @@ const Shipping = () => {
 
   return (
     <div className="p-6 text-white space-y-6 bg-[#0D1D1E] min-h-screen">
+      <h2 className="text-2xl font-bold text-red-500">This section is under maintenance</h2>
+
       {/* Header */}
       <div className="flex justify-between items-center flex-wrap gap-4">
         <h2 className="text-2xl font-bold">Shipping</h2>
