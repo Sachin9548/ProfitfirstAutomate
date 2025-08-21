@@ -10,12 +10,30 @@ const Navbar = () => {
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
   const solutions = [
-    { title: "Centralized Analytics Dashboard", desc: "Consolidate performance metrics from all platforms into a single, real-time view." },
-    { title: "Advanced Financial Analytics", desc: "Monitor spend, revenue, and profitability with precision visual reporting." },
-    { title: "Seamless API Integrations", desc: "Effortlessly sync Meta Ads, Shopify, Shiprocket, and other platforms." },
-    { title: "AI-Powered Strategy Assistant", desc: "Receive actionable growth strategies based on your live business data." },
-    { title: "Automated WhatsApp Reporting", desc: "Get daily performance summaries delivered instantly to your WhatsApp." },
-    { title: "Predictive Revenue Modeling", desc: "Forecast revenue, profit, and KPIs using AI-driven trend analysis." },
+    {
+      title: "Centralized Analytics Dashboard",
+      desc: "Consolidate performance metrics from all platforms into a single, real-time view.",
+    },
+    {
+      title: "Advanced Financial Analytics",
+      desc: "Monitor spend, revenue, and profitability with precision visual reporting.",
+    },
+    {
+      title: "Seamless API Integrations",
+      desc: "Effortlessly sync Meta Ads, Shopify, Shiprocket, and other platforms.",
+    },
+    {
+      title: "AI-Powered Strategy Assistant",
+      desc: "Receive actionable growth strategies based on your live business data.",
+    },
+    {
+      title: "Automated WhatsApp Reporting",
+      desc: "Get daily performance summaries delivered instantly to your WhatsApp.",
+    },
+    {
+      title: "Predictive Revenue Modeling",
+      desc: "Forecast revenue, profit, and KPIs using AI-driven trend analysis.",
+    },
   ];
 
   const controlNavbar = () => {
@@ -42,9 +60,8 @@ const Navbar = () => {
   };
 
   const handleSolutionClick = (index) => {
-    setActiveSolutionIndex(prevIndex => (prevIndex === index ? null : index));
+    setActiveSolutionIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-
 
   return (
     <>
@@ -67,15 +84,17 @@ const Navbar = () => {
 
         <ul className="hidden md:flex space-x-6 text-[#fff] gap-6 items-center">
           <li>
-            <Link to="/" className="hover:text-green-500">Home</Link>
+            <Link to="/" className="hover:text-green-500">
+              Home
+            </Link>
           </li>
 
           <li
             className="relative"
             onMouseEnter={() => setSolutionsOpen(true)}
             onMouseLeave={() => {
-                setSolutionsOpen(false);
-                setActiveSolutionIndex(null);
+              setSolutionsOpen(false);
+              setActiveSolutionIndex(null);
             }}
           >
             <button
@@ -84,7 +103,12 @@ const Navbar = () => {
               aria-expanded={solutionsOpen}
             >
               Solutions
-              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
                 <path
                   fillRule="evenodd"
                   d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -97,7 +121,7 @@ const Navbar = () => {
               role="menu"
               className={[
                 "absolute left-1/2 -translate-x-1/2 top-full mt-3 rounded-2xl shadow-xl p-4 z-[60]",
-                "bg-black/30 backdrop-blur-xl", 
+                "bg-black/30 backdrop-blur-xl",
                 "w-[1000px] max-w-[95vw]",
                 "transition-all duration-200",
                 solutionsOpen
@@ -107,24 +131,28 @@ const Navbar = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {solutions.map((s, idx) => (
-                  <div key={idx} className="rounded-xl hover:bg-white/5 transition-colors duration-300 p-3 bg-[#2e2d2d]">
+                  <div
+                    key={idx}
+                    className="rounded-xl hover:bg-white/5 transition-colors duration-300 p-3 bg-[#2e2d2d]"
+                  >
                     <button
                       role="menuitem"
                       onClick={() => handleSolutionClick(idx)}
                       className="w-full text-left focus:outline-none"
                     >
                       <div className="font-medium text-white">{s.title}</div>
-                      
+
                       <div
                         className={`grid transition-all duration-500 ease-in-out ${
-                           activeSolutionIndex === idx ? 'grid-rows-[1fr] opacity-100 pt-2' : 'grid-rows-[0fr] opacity-0'
+                          activeSolutionIndex === idx
+                            ? "grid-rows-[1fr] opacity-100 pt-2"
+                            : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
                         <div className="overflow-hidden">
-                           <div className="text-sm text-gray-300">{s.desc}</div>
+                          <div className="text-sm text-gray-300">{s.desc}</div>
                         </div>
                       </div>
-
                     </button>
                   </div>
                 ))}
@@ -132,16 +160,43 @@ const Navbar = () => {
             </div>
           </li>
 
-          <li><a href="#DASHBOARD" className="hover:text-green-500">Resources</a></li>
-          <li><a href="#USECASES" className="hover:text-green-500">Use Cases</a></li>
-          <li><a href="#BLOG" className="hover:text-green-500">Blog</a></li>
-          <li><Link to="/ourstorys" className="hover:text-green-500">Customers Stories</Link></li>
-          <li><Link to="/Profitcalculater" className="hover:text-green-500">Profit Calculater</Link></li>
-          <li><a href="#PRICING" className="hover:text-green-500">Pricing</a></li>
+          <li>
+            <a href="#DASHBOARD" className="hover:text-green-500">
+              Resources
+            </a>
+          </li>
+          <li>
+            <a href="#USECASES" className="hover:text-green-500">
+              Use Cases
+            </a>
+          </li>
+          <li>
+            <a href="#BLOG" className="hover:text-green-500">
+              Blog
+            </a>
+          </li>
+          <li>
+            <Link to="/ourstorys" className="hover:text-green-500">
+              Customers Stories
+            </Link>
+          </li>
+          <li>
+            <Link to="/Profitcalculater" className="hover:text-green-500">
+              Profit Calculater
+            </Link>
+          </li>
+          <li>
+            <a href="#PRICING" className="hover:text-green-500">
+              Pricing
+            </a>
+          </li>
         </ul>
 
         <div className="hidden md:block">
-          <Link to="/signup" className="bg-green-500 text-white px-4 py-2 hover:bg-gray-900 transition rounded-lg">
+          <Link
+            to="/signup"
+            className="bg-green-500 text-white px-4 py-2 hover:bg-gray-900 transition rounded-lg"
+          >
             Get Started
           </Link>
         </div>
@@ -149,12 +204,32 @@ const Navbar = () => {
         <div className="md:hidden">
           <button onClick={toggleDrawer} aria-label="Toggle Menu">
             {drawerOpen ? (
-              <svg className="w-6 h-6 text-white absolute bottom-0 right-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6 text-white absolute bottom-0 right-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
@@ -172,7 +247,11 @@ const Navbar = () => {
           </div>
           <ul className="flex flex-col space-y-4 text-white">
             <li>
-              <Link to="/" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">
+              <Link
+                to="/"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
                 Home
               </Link>
             </li>
@@ -185,7 +264,9 @@ const Navbar = () => {
               >
                 <span>Solutions</span>
                 <svg
-                  className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? "rotate-180" : ""}`}
+                  className={`w-4 h-4 transition-transform ${
+                    mobileSolutionsOpen ? "rotate-180" : ""
+                  }`}
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -213,11 +294,57 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
-            <li><a href="#DASHBOARD" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">Resources</a></li>
-            <li><a href="#USECASES" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">Use Cases</a></li>
-            <li><a href="#BLOG" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">Blog</a></li>
-            <li><Link to="/ourstorys" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">Customers Stories</Link></li>
-            <li><a href="#PRICING" onClick={() => setDrawerOpen(false)} className="hover:text-green-500">Pricing</a></li>
+            <li>
+              <a
+                href="#DASHBOARD"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
+                Resources
+              </a>
+            </li>
+            <li>
+              <a
+                href="#USECASES"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
+                Use Cases
+              </a>
+            </li>
+            <li>
+              <a
+                href="#BLOG"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
+                Blog
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/ourstorys"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
+                Customers Stories
+              </Link>
+            </li>
+            <li>
+              <Link to="/Profitcalculater" className="hover:text-green-500">
+                Profit Calculater
+              </Link>
+            </li>
+
+            <li>
+              <a
+                href="#PRICING"
+                onClick={() => setDrawerOpen(false)}
+                className="hover:text-green-500"
+              >
+                Pricing
+              </a>
+            </li>
             <li>
               <Link
                 to="/signup"
