@@ -374,9 +374,9 @@ export const dashboard = async (req, res) => {
     const formattedEnd = toISTDate(new Date(endDate).toISOString());
     const cacheKey = `dashboard_${user._id}_${formattedStart}_${formattedEnd}`;
     const cachedData = dashboardCache.get(cacheKey);
-    // if (cachedData) {
-    //   return res.status(200).json(cachedData);
-    // }
+    if (cachedData) {
+      return res.status(200).json(cachedData);
+    }
     const [
       productCostsMap,
       metaDailyRaw,
@@ -755,4 +755,3 @@ export const dashboard = async (req, res) => {
     });
   }
 };
-
