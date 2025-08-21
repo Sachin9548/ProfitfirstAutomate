@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Pricing from "../components/Pricing";
 import FlowSection from "../components/FlowSection";
 import TrustedBrandsMarquee from "../components/TrustedBrandsMarquee";
+import OurImpact from '../components/Ourimpact';
 import Intigration from "../components/Intigration";
 import ProfitAnalyticsSection from "../components/ProfitAnalyticsSection";
 const Homepage = () => {
@@ -18,6 +19,7 @@ const Homepage = () => {
         <Herosection/>
         <TrustedBrandsMarquee/>
         <FlowSection/> 
+        <OurImpact/>
         <Intigration/>
         <ProfitAnalyticsSection/>
         <Blogsection/> 

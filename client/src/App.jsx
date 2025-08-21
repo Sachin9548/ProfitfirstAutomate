@@ -29,6 +29,8 @@ import Settings from "./pages/Settings";
 import ChatBot from "./pages/ChatBot";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import chatbott from "./public/WelcomeAnimation.gif"
+import Customerstory from "./pages/Customerstory";
+import Profitcalculater from "./components/Profitcalculater";
 function AppWrapper() {
   const isAuthenticated = isTokenValid();
   // const isAuthenticated = true;
@@ -45,6 +47,8 @@ function AppWrapper() {
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/ourstorys" element={<Customerstory />} />
+        <Route path="/Profitcalculater" element={<Profitcalculater />} />
         <Route path="/contact" element={<Contactus />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

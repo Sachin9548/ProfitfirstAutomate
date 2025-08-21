@@ -23,7 +23,7 @@ const Step3 = ({ onComplete }) => {
         setLoading(false);
       }
     };
-    fetchProducts();
+    fetchProducts(); 
   }, []);
 
   const handleChange = (productId, value) => {
