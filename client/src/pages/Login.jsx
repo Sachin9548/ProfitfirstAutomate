@@ -127,9 +127,9 @@ const Login = () => {
               />
               Remember me
             </label>
-            <a href="#" className="text-white hover:underline">
+            {/* <a href="#" className="text-white hover:underline">
               Forgot password?
-            </a>
+            </a> */}
           </div>
 
           <div className="flex space-x-4">

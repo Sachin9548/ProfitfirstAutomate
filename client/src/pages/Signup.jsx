@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,32 @@ const SignUp = () => {
       [id]: type === "checkbox" ? checked : value,
     }));
   };
+
+  // new code google login
+
+  const handleGoogleSignup = async (credentialResponse) => {
+    console.log(" google info", credentialResponse);
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const { email, given_name: firstName, family_name: lastName } = decoded;
+
+      const response = await axiosInstance.post("/auth/google-signup", {
+        firstName,
+        lastName,
+        email,
+      });
+
+      toast.success(response.data.message);
+      navigate("/login");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Google Signup failed. Please try again."
+      );
+    }
+  };
+
+  // end code
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,14 +82,16 @@ const SignUp = () => {
         lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
-      }); 
+      });
       toast.success(
         "Signup successful! Please check your email for verification."
       );
       navigate("/verify-email", { state: { email: formData.email } });
     } catch (error) {
       setTimeout(() => {
-        toast.error(error.response?.data?.message || "Signup failed. Please try again.");
+        toast.error(
+          error.response?.data?.message || "Signup failed. Please try again."
+        );
       }, 1000);
       console.error("Signup error:", error.response?.data?.message);
     } finally {
@@ -215,11 +244,14 @@ const SignUp = () => {
           {/* Social Sign Up Buttons */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
             <button className="flex-1 py-2 text-white rounded-md transition-colors border border-[#12EB8E] hover:bg-[#12EB8E] hover:text-green-300">
-              Sign up with Google
+              <GoogleLogin
+                onSuccess={handleGoogleSignup}
+                onError={() => toast.error("Google Signup Failed")}
+              />
             </button>
-            <button className="flex-1 py-2 text-white rounded-md transition-colors border border-[#12EB8E] hover:bg-[#12EB8E] hover:text-green-300">
+            {/* <button className="flex-1 py-2 text-white rounded-md transition-colors border border-[#12EB8E] hover:bg-[#12EB8E] hover:text-green-300">
               Sign up with Facebook
-            </button>
+            </button> */}
           </div>
 
           {/* Already have an account? */}
