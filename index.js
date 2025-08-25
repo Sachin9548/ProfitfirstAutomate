@@ -13,6 +13,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 10000;
 
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp"); // optional
+  next();
+});
+
 // Get __dirname equivalent in ES Module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
