@@ -3,12 +3,15 @@ import { signupController, varifyemail } from '../controller/auth/signupControll
 import loginController from '../controller/auth/loginController.js';
 import {setMetaAccessToken} from '../controller/setMetaAccessToken.js';
 import User from '../model/userModel.js';
+import {googleSignupController} from '../controller/auth/googleSignupController.js';
 
 const router = express.Router();
 
 router.post('/signup',signupController);
 router.get('/verify-email/:token',varifyemail);
 router.post('/login',loginController);
+router.post('/google-signup', googleSignupController);
+
 router.post('/setMetaAccessToken', setMetaAccessToken);
 
 router.get("/users/:id", async (req, res) => {

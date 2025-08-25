@@ -25,11 +25,9 @@ const signupController = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({
-          message: "Account creation failed. Email may already be in use.",
-        });
+      return res.status(400).json({
+        message: "Account creation failed. Email may already be in use.",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,7 +75,7 @@ const signupController = async (req, res) => {
 };
 
 const varifyemail = async (req, res) => {
-  console.log("varify email hit")
+  console.log("varify email hit");
   try {
     const decoded = jwt.verify(req.params.token, process.env.JWT_SECRET);
     const user = await User.findByIdAndUpdate(
